@@ -4,7 +4,6 @@
   "description": "html and vanilla js scaffold for shopify app dev",
   "main": "index.js",
   "scripts": {
-    "build": "gulp",
     "start": "gulp serve",
     "prod": "cross-env NODE_ENV=prod gulp",
     "staging": "cross-env NODE_ENV=staging gulp"

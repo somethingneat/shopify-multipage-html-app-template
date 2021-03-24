@@ -22,7 +22,7 @@ const envVars = require(`./env.${
   (isProd && "prod") ||
   (isStaging && "staging") ||
   (!isProd && !isStaging && "dev")
-}.js`);
+}.json`);
 
 var options = {};
 
@@ -121,23 +121,10 @@ function img() {
     .pipe(gulp.dest("public/assets/img/"));
 }
 
-function icons() {
-  return gulp
-    .src("src/assets/icons/*")
-    .pipe(gulpIf(isProd, imagemin()))
-    .pipe(gulp.dest("public/assets/icons/"));
-}
-
 function fonts() {
   return gulp
     .src("src/assets/fonts/*.{eot,svg,ttf,woff,woff2}")
     .pipe(gulp.dest("public/assets/fonts/"));
-}
-
-function fontAwesome() {
-  return gulp
-    .src("./node_modules/@fortawesome/**/*")
-    .pipe(gulp.dest("public/assets/vendor/"));
 }
 
 function serve() {
@@ -162,10 +149,7 @@ function watchFiles() {
     gulp.series(js, browserSyncReload)
   );
   gulp.watch("src/assets/img/**/*.*", gulp.series(img));
-  gulp.watch("src/assets/icons/**/*.*", gulp.series(icons));
   gulp.watch("src/assets/**/*.{eot,svg,ttf,woff,woff2}", gulp.series(fonts));
-  gulp.watch("src/assets/vendor/**/*.*", gulp.series(fontAwesome));
-
   return;
 }
 
@@ -178,7 +162,6 @@ exports.css = css;
 exports.html = html;
 exports.js = js;
 exports.fonts = fonts;
-exports.fontAwesome = fontAwesome;
 exports.del = del;
 exports.serve = gulp.parallel(
   html,
@@ -186,9 +169,7 @@ exports.serve = gulp.parallel(
   css,
   js,
   img,
-  icons,
   fonts,
-  fontAwesome,
   watchFiles,
   serve
 );
@@ -200,6 +181,4 @@ exports.default = gulp.series(
   js,
   fonts,
   img,
-  icons,
-  fontAwesome
 );
